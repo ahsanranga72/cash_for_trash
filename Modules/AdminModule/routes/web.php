@@ -14,6 +14,15 @@ use Modules\AdminModule\app\Http\Controllers\AdminModuleController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('adminmodule', AdminModuleController::class)->names('adminmodule');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    /*auth*/
+    Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::get('login', 'LoginController@login')->name('login');
+        Route::post('login', 'LoginController@submit');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+    });
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::get('/', 'AdminController@index')->name('dashboard');
+    });
 });
