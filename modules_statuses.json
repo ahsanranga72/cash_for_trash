@@ -1,4 +1,5 @@
 {
     "AdminModule": true,
-    "AgentModule": true
+    "AgentModule": true,
+    "FrontendModule": true
 }
