@@ -67,7 +67,7 @@ const DEFAULT_200_PASSWORD_NOT_MATCH = [
 ];
 
 const DEFAULT_200_PASSWORD_RESET = [
-    'message' => 'password successfully reset'
+    'message' => 'Password successfully reset'
 ];
 
 const DEFAULT_200_USER_REMOVED = [

@@ -1,10 +1,10 @@
 <?php
 
-const ADMIN = ['super-admin', 'assistant-admin'];
+const ADMIN = 'super-admin';
 
-const TEACHER = 'teacher-admin';
+const AGENT = 'agent-admin';
 
-const STUDENT = 'student';
+const CUSTOMER = 'customer';
 
 const FILE_TYPE = [
     [

@@ -41,6 +41,6 @@ class LoginController extends Controller
     {
         auth()->logout();
         $request->session()->invalidate();
-        return redirect()->route('admin.auth.login');
+        return redirect()->route('admin.auth.login')->with('success', DEFAULT_LOGOUT_200['message']);
     }
 }

@@ -48,6 +48,22 @@
                                 List</a></li>
                     </ul>
                 </li>
+                <li class="slide {{ request()->segment(2) == 'agent' ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->segment(2) == 'agent' ? 'active is-expanded' : '' }}"
+                        data-bs-toggle="slide" href="javascript:void(0)"><i
+                            class="side-menu__icon fe fe-users"></i><span
+                            class="side-menu__label">Agent</span><i class="angle fe fe-chevron-right"></i></a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.agent.create') }}"
+                                class="slide-item {{ request()->is('admin/agent/create') ? 'active' : '' }}">
+                                Add</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.agent.index') }}"
+                                class="slide-item {{ request()->is('admin/agent') ? 'active' : '' }}">
+                                List</a></li>
+                    </ul>
+                </li>
             </ul>
             <div style="height: 100px;"></div>
             <div class="slide-right" id="slide-right">

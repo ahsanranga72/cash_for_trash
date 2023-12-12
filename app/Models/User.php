@@ -45,4 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function scopeType($query, $type)
+    {
+        return $query->where('user_type', $type);
+    }
 }
