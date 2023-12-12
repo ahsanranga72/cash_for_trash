@@ -32,19 +32,19 @@
                 <li class="sub-category">
                     <h3>Agent</h3>
                 </li>
-                <li class="slide {{ request()->segment(2) == 'orders' ? 'active is-expanded' : '' }}">
-                    <a class="side-menu__item {{ request()->segment(2) == 'orders' ? 'active is-expanded' : '' }}"
+                <li class="slide {{ request()->segment(3) == 'locations' ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->segment(3) == 'locations' ? 'active is-expanded' : '' }}"
                         data-bs-toggle="slide" href="javascript:void(0)"><i
-                            class="side-menu__icon fe fe-shopping-cart"></i><span
+                            class="side-menu__icon fe fe-globe"></i><span
                             class="side-menu__label">Location</span><i class="angle fe fe-chevron-right"></i></a>
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.agent.locations.create') }}"
-                                class="slide-item {{ request()->is('admin/orders/status/all') ? 'active' : '' }}">
+                                class="slide-item {{ request()->is('admin/agent/locations/create') ? 'active' : '' }}">
                                 Add</a></li>
                     </ul>
                     <ul class="slide-menu">
-                        <li><a href="#"
-                                class="slide-item {{ request()->is('admin/orders/status/pending') ? 'active' : '' }}">
+                        <li><a href="{{ route('admin.agent.locations.index') }}"
+                                class="slide-item {{ request()->is('admin/agent/locations') ? 'active' : '' }}">
                                 List</a></li>
                     </ul>
                 </li>

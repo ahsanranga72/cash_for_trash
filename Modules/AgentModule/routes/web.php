@@ -18,6 +18,9 @@ use Modules\AgentModule\app\Http\Controllers\AgentModuleController;
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::group(['middleware' => ['admin'], 'prefix' => 'agent', 'as' => 'agent.'], function () {
         Route::resource('locations', 'LocationController');
+        Route::group(['prefix' => 'locations', 'as' => 'locations.'], function () {
+            Route::any('data/status-update/{id}', 'LocationController@status_update')->name('status-update');
+        });
     });
 });
 

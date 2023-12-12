@@ -27,7 +27,12 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Modules\\": "Modules/"
-        }
+        },
+        "files": [
+            "app/Libraries/GlobalConstants.php",
+            "app/Libraries/Helpers.php",
+            "app/Libraries/ApiResponses.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
