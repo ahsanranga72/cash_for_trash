@@ -9,21 +9,27 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Modules\AgentModule\app\Models\Agent;
+use Modules\AgentModule\app\Models\Location;
 
 class AgentController extends Controller
 {
     private $user;
+    private $agent;
+    private $location;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Agent $agent, Location $location)
     {
         $this->user = $user;
+        $this->agent = $agent;
+        $this->location = $location;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $agents = $this->user->Type(AGENT)->when($request->has('search'), function ($query) use ($request) {
+        $agents = $this->user->Type(AGENT)->with('agent')->when($request->has('search'), function ($query) use ($request) {
             $key = explode(' ', $request['search']);
             foreach ($key as $value) {
                 $query->Where('first_name', 'like', "%{$value}%");
@@ -38,7 +44,8 @@ class AgentController extends Controller
      */
     public function create()
     {
-        return view('agentmodule::admin.agent.create');
+        $locations = $this->location->active()->get();
+        return view('agentmodule::admin.agent.create', compact('locations'));
     }
 
     /**
@@ -52,6 +59,7 @@ class AgentController extends Controller
             'last_name' => 'required',
             'email' => 'required|email|unique:users',
             'phone' => 'required',
+            'location_id' => 'required',
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required|min:8',
         ]);
@@ -70,6 +78,11 @@ class AgentController extends Controller
         $user->is_verified = 1;
         $user->save();
 
+        $agent = $this->agent;
+        $agent->user_id = $user->id;
+        $agent->location_id = $request['location_id'];
+        $agent->save();
+
         return redirect()->route('admin.agent.index')->with('success', DEFAULT_200_STORE['message']);
     }
 
@@ -78,8 +91,9 @@ class AgentController extends Controller
      */
     public function edit($id)
     {
-        $agent = $this->user->Type(AGENT)->findOrFail($id);
-        return view('agentmodule::admin.agent.edit', compact('agent'));
+        $agent = $this->user->Type(AGENT)->with('agent')->findOrFail($id);
+        $locations = $this->location->active()->get();
+        return view('agentmodule::admin.agent.edit', compact('agent', 'locations'));
     }
 
     /**
@@ -91,8 +105,9 @@ class AgentController extends Controller
             'profile_image' => 'image',
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'phone' => 'required'
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required',
+            'location_id' => 'required',
         ]);
 
         $user = $this->user->findOrFail($id);
@@ -101,11 +116,15 @@ class AgentController extends Controller
         $user->email = $request['email'];
         $user->phone = $request['phone'];
         if ($request->has('profile_image')) {
-            $user->profile_image = image_uploader('users/profile_images/', 'png', $request['profile_image'], !empty($user['profile_image'])? $user['profile_image'] : null);
+            $user->profile_image = image_uploader('users/profile_images/', 'png', $request['profile_image'], !empty($user['profile_image']) ? $user['profile_image'] : null);
         }
         $user->is_active = 1;
         $user->is_verified = 1;
         $user->save();
+
+        $agent = $this->agent->where('user_id', $user['id'])->first();
+        $agent->location_id = $request['location_id'];
+        $agent->save();
 
         return redirect()->route('admin.agent.index')->with('success', DEFAULT_200_UPDATE['message']);
     }
@@ -129,9 +148,10 @@ class AgentController extends Controller
     public function destroy($id)
     {
         $user = $this->user->where(['id' => $id])->first();
-        if(!empty($user->profile_image)){
+        if (!empty($user->profile_image)) {
             file_remover('users/profile_images/', $user->profile_image);
         }
+        $user->agent->delete();
         $user->delete();
         session()->flash('success', DEFAULT_200_DELETE['message']);
         return back();

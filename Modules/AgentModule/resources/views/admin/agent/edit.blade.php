@@ -30,11 +30,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 col-xl-12">
+                            <div class="col-md-6 col-xl-6">
                                 <div class="form-group">
                                     <label for="profile_image" class="form-label">Profile image</label>
                                     <input type="file" class="form-control" id="profile_image" name="profile_image"
                                         onchange="read_image(this, 'profile_image')">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label for="location_id" class="form-label">Location <span
+                                            class="text-red">*</span></label>
+                                    <select class="form-control select2" name="location_id" id="location_id"
+                                        data-placeholder="Select Location" required>
+                                        @foreach ($locations as $location)
+                                            <option value="{{ $location['id'] }}"
+                                                {{ $location['id'] === $agent->agent->location->id ? 'selected' : '' }}>
+                                                {{ $location['area_name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -122,4 +137,6 @@
 @endsection
 
 @push('page_js')
+    <script src="{{ asset('assets/admin-module') }}/plugins/select2/select2.full.min.js"></script>
+    <script src="{{ asset('assets/admin-module') }}/js/select2.js"></script>
 @endpush

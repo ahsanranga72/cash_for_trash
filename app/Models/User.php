@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\AgentModule\app\Models\Agent;
+use Modules\AgentModule\app\Models\Location;
 
 class User extends Authenticatable
 {
@@ -49,5 +51,15 @@ class User extends Authenticatable
     public function scopeType($query, $type)
     {
         return $query->where('user_type', $type);
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(Agent::class);
+    }
+    
+    public function location()
+    {
+        return $this->hasOne(Location::class);
     }
 }

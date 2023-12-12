@@ -9,6 +9,7 @@
         <td class="text-nowrap align-middle">{{ $item['last_name'] }}</td>
         <td class="text-nowrap align-middle">{{ $item['email'] }}</td>
         <td class="text-nowrap align-middle">{{ $item['phone'] }}</td>
+        <td class="text-nowrap align-middle">{{ $item->agent->location->area_name }}</td>
         <td class="text-center align-middle">
             <div class="form-group">
                 <label class="custom-switch form-switch mb-0 pt-2">

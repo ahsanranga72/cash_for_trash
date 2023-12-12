@@ -16,13 +16,13 @@ use Modules\AgentModule\app\Http\Controllers\AgentModuleController;
 */
 
 Route::group(['middleware' => ['admin'], 'namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::resource('agent', 'AgentController');
+    Route::resource('agent', 'AgentController')->except('show');
     Route::group(['prefix' => 'agent', 'as' => 'agent.'], function () {
         Route::any('data/status-update/{id}', 'AgentController@status_update')->name('status-update');
         Route::any('data/verification-update/{id}', 'AgentController@verification_update')->name('verification-update');
         Route::any('update-password/{id}', 'AgentController@update_password')->name('update-password');
         //location
-        Route::resource('locations', 'LocationController');
+        Route::resource('locations', 'LocationController')->except('show');
         Route::group(['prefix' => 'locations', 'as' => 'locations.'], function () {
             Route::any('data/status-update/{id}', 'LocationController@status_update')->name('status-update');
         });

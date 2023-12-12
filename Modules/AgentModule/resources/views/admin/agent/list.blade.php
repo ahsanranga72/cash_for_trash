@@ -43,6 +43,7 @@
                                     <th class="text-center">Last name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Phone</th>
+                                    <th class="text-center">Location</th>
                                     <th class="text-center">Is active</th>
                                     <th class="text-center">Is varified</th>
                                     <th class="text-center">action</th>
