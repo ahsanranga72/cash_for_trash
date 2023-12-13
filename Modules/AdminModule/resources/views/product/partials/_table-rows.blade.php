@@ -1,16 +1,15 @@
 @forelse ($items as $key => $item)
     <tr>
         <td class="align-middle text-center">{{ ($items->currentPage() - 1) * $items->perPage() + $key + 1 }}</td>
-        <td class="text-nowrap align-middle">{{ $item['area_name'] }}</td>
-        <td class="text-nowrap align-middle">{{ $item['district'] }}</td>
-        <td class="text-nowrap align-middle">{{ $item['police_station'] }}</td>
-        <td class="text-nowrap align-middle">{{ $item['post_code'] }}</td>
+        <td class="text-nowrap align-middle">{{ $item['name'] }}</td>
+        <td class="text-nowrap align-middle">{{ $item->category->name }}</td>
+        <td class="text-nowrap align-middle">{{ $item['price'] }}</td>
         <td class="text-center align-middle">
             <div class="form-group">
                 <label class="custom-switch form-switch mb-0 pt-2">
                     <span style="margin-right: 0.5rem;color: #6e7687;transition: 0.3s color;">Off</span>
                     <input type="checkbox" {{ $item['is_active'] == 1 ? 'checked' : '' }}
-                        onchange="ajax_post('{{ route('admin.agent.locations.status-update', $item['id']) }}','','')"
+                        onchange="ajax_post('{{ route('admin.products.status-update', $item['id']) }}','','')"
                         class="custom-switch-input">
                     <span class="custom-switch-indicator"></span>
                     <span class="custom-switch-description">On</span>
@@ -20,11 +19,11 @@
         <td class="text-center align-middle">
             <div class="g-2">
                 <a class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Edit"
-                    href="{{ route('admin.agent.locations.edit', $item['id']) }}"><span class="fe fe-edit fs-14"></span></a>
+                    href="{{ route('admin.products.edit', $item['id']) }}"><span class="fe fe-edit fs-14"></span></a>
                 <a class="btn text-danger btn-sm" href="javascript:void(0)" data-bs-toggle="tooltip"
                     data-bs-original-title="Delete" onclick="alert_function('delete-{{ $item['id'] }}')">
                     <span class="fe fe-trash-2 fs-14"></span></a>
-                <form action="{{ route('admin.agent.locations.destroy', $item['id']) }}" id="delete-{{ $item['id'] }}"
+                <form action="{{ route('admin.products.destroy', $item['id']) }}" id="delete-{{ $item['id'] }}"
                     method="post">
                     @csrf
                     @method('DELETE')
@@ -34,7 +33,7 @@
     </tr>
 @empty
     <tr>
-        <td colspan="7" class="text-center align-middle" style="padding: 3rem 0 !important;">
+        <td colspan="6" class="text-center align-middle" style="padding: 3rem 0 !important;">
             Nothing to show !</td>
     </tr>
 @endforelse

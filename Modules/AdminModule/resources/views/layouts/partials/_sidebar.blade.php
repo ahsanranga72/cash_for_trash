@@ -59,7 +59,7 @@
                                 Add</a></li>
                     </ul>
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.agent.locations.index') }}"
+                        <li><a href="{{ route('admin.products.index') }}"
                                 class="slide-item {{ request()->is('admin/products') ? 'active' : '' }}">
                                 List</a></li>
                     </ul>

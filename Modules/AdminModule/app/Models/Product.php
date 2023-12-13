@@ -19,4 +19,9 @@ class Product extends Model
     {
         //return ProductFactory::new();
     }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
 }

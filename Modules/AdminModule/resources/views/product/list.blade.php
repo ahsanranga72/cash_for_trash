@@ -1,6 +1,6 @@
 @extends('adminmodule::layouts.master')
 
-@section('page_title', 'Admin agent locations list')
+@section('page_title', 'Admin products list')
 
 @push('page_css')
     
@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="card-header border-bottom-0">
-                            <form action="{{ route('admin.agent.locations.index') }}" method="get">
+                            <form action="{{ route('admin.products.index') }}" method="get">
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ request()->input('search') }}"
                                         id="search" name="search">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="card-header border-bottom-0 float-end">
-                            <a href="{{ route('admin.agent.locations.create') }}" class="btn btn-primary mb-4">Add new <i
+                            <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-4">Add new <i
                                     class="fa fa-plus"></i></a>
                         </div>
                     </div>
@@ -38,17 +38,16 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Sl</th>
-                                    <th class="text-center">Area Name</th>
-                                    <th class="text-center">District</th>
-                                    <th class="text-center">Police station</th>
-                                    <th class="text-center">Post code</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Price</th>
                                     <th class="text-center">Is active</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @include('agentmodule::admin.location.partials._table-rows', [
-                                    'items' => $locations,
+                                @include('adminmodule::product.partials._table-rows', [
+                                    'items' => $products,
                                 ])
                             </tbody>
                         </table>
@@ -56,7 +55,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="pagination m-l-20 m-b-10 float-end" id="pagination">
-                        {!! $locations->links() !!}
+                        {!! $products->links() !!}
                     </div>
                 </div>
             </div>

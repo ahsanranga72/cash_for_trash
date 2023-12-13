@@ -27,9 +27,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         //products
         Route::resource('products', 'ProductController')->except('show');
         Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-            Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-                Route::any('data/status-update/{id}', 'ProductController@status_update')->name('status-update');
-            });
+            Route::any('data/status-update/{id}', 'ProductController@status_update')->name('status-update');
             //category
             Route::resource('category', 'CategoryController')->except('show');
             Route::group(['prefix' => 'category', 'as' => 'category.'], function () {

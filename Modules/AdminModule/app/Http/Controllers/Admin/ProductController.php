@@ -3,32 +3,36 @@
 namespace Modules\AdminModule\app\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\AdminModule\app\Models\Category;
 use Modules\AdminModule\app\Models\Product;
 
 class ProductController extends Controller
 {
     private $product;
+    private $category;
 
-    public function __construct(Product $product)
+    public function __construct(Product $product, Category $category)
     {
         $this->product = $product;
+        $this->category = $category;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $products = $this->product->when($request->has('search'), function ($query) use ($request) {
+        $products = $this->product->with('category')->when($request->has('search'), function ($query) use ($request) {
             $key = explode(' ', $request['search']);
             foreach ($key as $value) {
                 $query->Where('name', 'like', "%{$value}%");
             }
         })->latest()->paginate(10);
 
-        return view('agentmodule::admin.product.list', compact('products'));
+        return view('adminmodule::product.list', compact('products'));
     }
 
     /**
@@ -36,7 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('agentmodule::admin.product.create');
+        $categories = $this->category->active()->get();
+        return view('adminmodule::product.create', compact('categories'));
     }
 
     /**
@@ -45,21 +50,19 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'area_name' => 'required',
-            'district' => 'required',
-            'police_station' => 'required',
-            'post_code' => 'required',
+            'name' => 'required|string|max:50',
+            'category_id' => 'required',
+            'price' => 'required|integer',
         ]);
 
-        $location = $this->location;
-        $location->area_name = $request['area_name'];
-        $location->district = $request['district'];
-        $location->police_station = $request['police_station'];
-        $location->post_code = $request['post_code'];
-        $location->is_active = 1;
-        $location->save();
+        $product = $this->product;
+        $product->name = $request['name'];
+        $product->category_id = $request['category_id'];
+        $product->price = $request['price'];
+        $product->is_active = 1;
+        $product->save();
 
-        return redirect()->route('admin.agent.locations.index')->with('success', DEFAULT_200_STORE['message']);
+        return redirect()->route('admin.products.index')->with('success', DEFAULT_200_STORE['message']);
     }
 
     /**
@@ -67,8 +70,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $location = $this->location->findOrFail($id);
-        return view('agentmodule::admin.location.edit', compact('location'));
+        $product = $this->product->with('category')->findOrFail($id);
+        $categories = $this->category->active()->get();
+        return view('adminmodule::product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -77,20 +81,19 @@ class ProductController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
-            'area_name' => 'required',
-            'district' => 'required',
-            'police_station' => 'required',
-            'post_code' => 'required',
+            'name' => 'required|string|max:50',
+            'category_id' => 'required',
+            'price' => 'required|integer',
         ]);
 
-        $location = $this->location->findOrFail($id);
-        $location->area_name = $request['area_name'];
-        $location->district = $request['district'];
-        $location->police_station = $request['police_station'];
-        $location->post_code = $request['post_code'];
-        $location->save();
+        $product = $this->product->findOrFail($id);
+        $product->name = $request['name'];
+        $product->category_id = $request['category_id'];
+        $product->price = $request['price'];
+        $product->is_active = 1;
+        $product->save();
 
-        return redirect()->route('admin.agent.locations.index')->with('success', DEFAULT_200_UPDATE['message']);
+        return redirect()->route('admin.products.index')->with('success', DEFAULT_200_UPDATE['message']);
     }
 
     /**
@@ -98,15 +101,15 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $location = $this->location->where(['id' => $id])->first();
-        $location->delete();
+        $product = $this->product->where(['id' => $id])->first();
+        $product->delete();
         session()->flash('success', DEFAULT_200_DELETE['message']);
         return back();
     }
 
     public function status_update(string $id): JsonResponse
     {
-        $this->location->where('id', $id)->update(['is_active' => !$this->location->find($id)->is_active]);
+        $this->product->where('id', $id)->update(['is_active' => !$this->product->find($id)->is_active]);
         return response()->json(response_structure(DEFAULT_200_UPDATE), 200);
     }
 }

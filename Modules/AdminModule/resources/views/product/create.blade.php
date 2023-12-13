@@ -1,6 +1,6 @@
 @extends('adminmodule::layouts.master')
 
-@section('page_title', 'Admin agent location create')
+@section('page_title', 'Admin product create')
 
 @push('page_css')
 @endpush
@@ -14,41 +14,40 @@
                     <h4 class="card-title">Create form</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.agent.locations.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="area_name" class="form-label">Area name<span class="text-red">
+                                    <label for="name" class="form-label">Name<span class="text-red">
                                             *</span></label>
-                                    <input type="text" class="form-control" id="area_name" name="area_name" required
-                                        placeholder="Enter area name">
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        placeholder="Enter name">
                                 </div>
                             </div>
                             <div class="col-md-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="district" class="form-label">District<span class="text-red">
-                                            *</span></label>
-                                    <input type="text" class="form-control" id="district" name="district" required
-                                        placeholder="Enter district">
+                                    <label for="category_id" class="form-label">Category <span
+                                            class="text-red">*</span></label>
+                                    <select class="form-control select2" name="category_id" id="category_id"
+                                        data-placeholder="Select Category" required>
+                                        <option value=""></option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category['id'] }}">
+                                                {{ $category['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="police_station" class="form-label">Police station<span class="text-red">
+                                    <label for="price" class="form-label">Price<span class="text-red">
                                             *</span></label>
-                                    <input type="text" class="form-control" id="police_station" name="police_station" required
-                                        placeholder="Enter police station">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-6">
-                                <div class="form-group">
-                                    <label for="post_code" class="form-label">Post code<span class="text-red">
-                                            *</span></label>
-                                    <input type="text" class="form-control" id="post_code" name="post_code" required
-                                        placeholder="Enter post code">
+                                    <input type="number" class="form-control" id="price" name="price"
+                                        required placeholder="Enter price">
                                 </div>
                             </div>
                         </div>
@@ -66,4 +65,6 @@
 @endsection
 
 @push('page_js')
+    <script src="{{ asset('assets/admin-module') }}/plugins/select2/select2.full.min.js"></script>
+    <script src="{{ asset('assets/admin-module') }}/js/select2.js"></script>
 @endpush
