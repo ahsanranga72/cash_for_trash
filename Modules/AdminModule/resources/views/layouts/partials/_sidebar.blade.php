@@ -30,13 +30,48 @@
                             class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                 </li>
                 <li class="sub-category">
+                    <h3>Product</h3>
+                </li>
+                <li class="slide {{ request()->segment(3) == 'category' ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->segment(3) == 'category' ? 'active is-expanded' : '' }}"
+                        data-bs-toggle="slide" href="javascript:void(0)"><i
+                            class="side-menu__icon fe fe-menu"></i><span class="side-menu__label">Category</span><i
+                            class="angle fe fe-chevron-right"></i></a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.products.category.create') }}"
+                                class="slide-item {{ request()->is('admin/products/category/create') ? 'active' : '' }}">
+                                Add</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.products.category.index') }}"
+                                class="slide-item {{ request()->is('admin/products/category') ? 'active' : '' }}">
+                                List</a></li>
+                    </ul>
+                </li>
+                <li class="slide {{ request()->segment(2) == 'products' && request()->segment(3) != 'category' ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->segment(2) == 'products' && request()->segment(3) != 'category' ? 'active is-expanded' : '' }}"
+                        data-bs-toggle="slide" href="javascript:void(0)"><i
+                            class="side-menu__icon fe fe-box"></i><span class="side-menu__label">Product</span><i
+                            class="angle fe fe-chevron-right"></i></a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.products.create') }}"
+                                class="slide-item {{ request()->is('admin/products/create') ? 'active' : '' }}">
+                                Add</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.agent.locations.index') }}"
+                                class="slide-item {{ request()->is('admin/products') ? 'active' : '' }}">
+                                List</a></li>
+                    </ul>
+                </li>
+                <li class="sub-category">
                     <h3>Agent</h3>
                 </li>
                 <li class="slide {{ request()->segment(3) == 'locations' ? 'active is-expanded' : '' }}">
                     <a class="side-menu__item {{ request()->segment(3) == 'locations' ? 'active is-expanded' : '' }}"
                         data-bs-toggle="slide" href="javascript:void(0)"><i
-                            class="side-menu__icon fe fe-globe"></i><span
-                            class="side-menu__label">Location</span><i class="angle fe fe-chevron-right"></i></a>
+                            class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Location</span><i
+                            class="angle fe fe-chevron-right"></i></a>
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.agent.locations.create') }}"
                                 class="slide-item {{ request()->is('admin/agent/locations/create') ? 'active' : '' }}">
@@ -48,11 +83,11 @@
                                 List</a></li>
                     </ul>
                 </li>
-                <li class="slide {{ request()->segment(2) == 'agent' ? 'active is-expanded' : '' }}">
-                    <a class="side-menu__item {{ request()->segment(2) == 'agent' ? 'active is-expanded' : '' }}"
+                <li class="slide {{ request()->segment(2) == 'agent' && request()->segment(3) != 'locations' ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->segment(2) == 'agent' && request()->segment(3) != 'locations' ? 'active is-expanded' : '' }}"
                         data-bs-toggle="slide" href="javascript:void(0)"><i
-                            class="side-menu__icon fe fe-users"></i><span
-                            class="side-menu__label">Agent</span><i class="angle fe fe-chevron-right"></i></a>
+                            class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Agent</span><i
+                            class="angle fe fe-chevron-right"></i></a>
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.agent.create') }}"
                                 class="slide-item {{ request()->is('admin/agent/create') ? 'active' : '' }}">

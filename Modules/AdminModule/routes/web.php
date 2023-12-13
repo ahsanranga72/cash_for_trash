@@ -24,5 +24,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/', 'AdminController@index')->name('dashboard');
+        //products
+        Route::resource('products', 'ProductController')->except('show');
+        Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+            Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+                Route::any('data/status-update/{id}', 'ProductController@status_update')->name('status-update');
+            });
+            //category
+            Route::resource('category', 'CategoryController')->except('show');
+            Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+                Route::any('data/status-update/{id}', 'CategoryController@status_update')->name('status-update');
+            });
+        });
     });
 });

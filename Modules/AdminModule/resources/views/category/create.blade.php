@@ -1,0 +1,41 @@
+@extends('adminmodule::layouts.master')
+
+@section('page_title', 'Admin product category create')
+
+@push('page_css')
+@endpush
+
+@section('main_content')
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Create form</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.products.category.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Name<span class="text-red">
+                                            *</span></label>
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        placeholder="Enter name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 mt-3">
+                                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Row -->
+@endsection
+
+@push('page_js')
+@endpush
