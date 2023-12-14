@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 use Modules\FrontendModule\app\Http\Controllers\FrontendModuleController;
 
@@ -27,3 +28,15 @@ Route::get('about-us', function () {
 })->name('about-us');
 
 Route::get('products/rate', 'FrontendModuleController@products_rate')->name('products.rate');
+
+Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'customer.'], function () {
+    Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::get('login', 'LoginController@login_form')->name('login');
+        Route::post('login', 'LoginController@submit')->name('login');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+        Route::post('registration', 'RegistrationController@registration')->name('registration');
+    });
+    Route::group(['middleware' => 'customer'], function () {
+        Route::resource('addresses', 'AddressController');
+    });
+});

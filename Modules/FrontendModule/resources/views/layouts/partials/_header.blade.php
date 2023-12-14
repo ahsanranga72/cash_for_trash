@@ -43,10 +43,21 @@
                                         <li><a href="#">Become a Agent</a></li>
                                     </ul>
                                 </li>
+                                @if (auth()->check() && auth()->user()->user_type == CUSTOMER)
+                                    <li class="header-get-a-quote">
+                                        <a class="btn btn-primary" href="javascript:void(0)" onclick="$('#logout-form').submit()">Log
+                                            out</a>
+                                    </li>
+                                    <form action="{{ route('customer.auth.logout') }}" method="post" id="logout-form"
+                                        class="hide">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <li class="header-get-a-quote">
+                                        <a class="btn btn-primary" href="{{ route('customer.auth.login') }}">Log in</a>
+                                    </li>
+                                @endif
 
-                                <li class="header-get-a-quote">
-                                    <a class="btn btn-primary" href="#">Log in</a>
-                                </li>
                             </ul>
                         </div>
                     </nav>

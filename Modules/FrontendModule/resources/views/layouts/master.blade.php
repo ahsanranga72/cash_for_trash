@@ -32,11 +32,13 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend-module') }}/plugins/colorbox/colorbox.css">
     <!-- Template styles-->
     <link rel="stylesheet" href="{{ asset('assets/frontend-module') }}/css/style.css">
+    <link href="{{ asset('assets/admin-module') }}/css/toastr.min.css" rel="stylesheet">
     <style>
         .nav-item.dropdown.active .nav-link {
             color: #ffb600 !important;
         }
     </style>
+    @stack('css')
 </head>
 
 <body>
@@ -112,7 +114,32 @@
 
         <!-- Template custom -->
         <script src="{{ asset('assets/frontend-module') }}/js/script.js"></script>
+        <script src="{{ asset('assets/admin-module') }}/custom-js/toastr.min.js"></script>
+        {{-- toastr --}}
+        <script>
+            "use strict";
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr.error('{{ $error }}');
+                @endforeach
+            @endif
 
+            @if (session()->has('success'))
+                toastr.success('{{ session('success') }}');
+            @endif
+
+            @if (session()->has('info'))
+                toastr.info('{{ session('info') }}');
+            @endif
+
+            @if (session()->has('warning'))
+                toastr.warning('{{ session('warning') }}');
+            @endif
+
+            @if (session()->has('error'))
+                toastr.error('{{ session('error') }}');
+            @endif
+        </script>
         <!-- SWEET-ALERT JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -131,7 +158,7 @@
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        window.location.href = "{{ route('admin.auth.login') }}";
+                        window.location.href = "{{ route('customer.auth.login') }}";
                     }
                     return false;
                 });
