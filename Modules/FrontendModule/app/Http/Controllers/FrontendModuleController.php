@@ -6,15 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\AdminModule\app\Models\Category;
+use Modules\AdminModule\app\Models\Product;
 
 class FrontendModuleController extends Controller
 {
+    private $product;
+    private $category;
+
+    public function __construct(Product $product, Category $category)
+    {
+        $this->product = $product;
+        $this->category = $category;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function products_rate()
     {
-        return view('frontendmodule::index');
+        $categories = $this->category->with('products')->active()->get();
+        return view('frontendmodule::products', compact('categories'));
     }
 
     /**

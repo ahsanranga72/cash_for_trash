@@ -14,6 +14,16 @@ use Modules\FrontendModule\app\Http\Controllers\FrontendModuleController;
 |
 */
 
-Route::get('/', function() {
-    return view('frontendmodule::layouts.master');
-});
+Route::get('/', function () {
+    return view('frontendmodule::home');
+})->name('home');
+
+Route::get('contact-us', function () {
+    return view('frontendmodule::contact-us');
+})->name('contact-us');
+
+Route::get('about-us', function () {
+    return view('frontendmodule::about-us');
+})->name('about-us');
+
+Route::get('products/rate', 'FrontendModuleController@products_rate')->name('products.rate');
