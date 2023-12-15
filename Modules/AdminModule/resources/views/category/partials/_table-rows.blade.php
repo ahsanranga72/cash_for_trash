@@ -17,12 +17,13 @@
         <td class="text-center align-middle">
             <div class="g-2">
                 <a class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Edit"
-                    href="{{ route('admin.products.category.edit', $item['id']) }}"><span class="fe fe-edit fs-14"></span></a>
+                    href="{{ route('admin.products.category.edit', $item['id']) }}"><span
+                        class="fe fe-edit fs-14"></span></a>
                 <a class="btn text-danger btn-sm" href="javascript:void(0)" data-bs-toggle="tooltip"
                     data-bs-original-title="Delete" onclick="alert_function('delete-{{ $item['id'] }}')">
                     <span class="fe fe-trash-2 fs-14"></span></a>
-                <form action="{{ route('admin.products.category.destroy', $item['id']) }}" id="delete-{{ $item['id'] }}"
-                    method="post">
+                <form action="{{ route('admin.products.category.destroy', $item['id']) }}"
+                    id="delete-{{ $item['id'] }}" method="post">
                     @csrf
                     @method('DELETE')
                 </form>

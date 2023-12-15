@@ -44,9 +44,18 @@
                                     </ul>
                                 </li>
                                 @if (auth()->check() && auth()->user()->user_type == CUSTOMER)
-                                    <li class="header-get-a-quote">
-                                        <a class="btn btn-primary" href="javascript:void(0)" onclick="$('#logout-form').submit()">Log
-                                            out</a>
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle btn btn-primary"
+                                            style="padding: 0 16px !important"
+                                            data-toggle="dropdown">{{ auth()->user()->first_name }}
+                                            <i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('customer.dashboard', 'orders') }}">Dashboard</a>
+                                            </li>
+                                            <li><a href="javascript:void(0)"
+                                                    onclick="alert_function('logout-form')">Log
+                                                    out</a></li>
+                                        </ul>
                                     </li>
                                     <form action="{{ route('customer.auth.logout') }}" method="post" id="logout-form"
                                         class="hide">

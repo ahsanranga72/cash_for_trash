@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="banner-area" class="banner-area"
-        style="background-image:url({{ asset('assets/frontend-module') }}/images/web/ser-2.jpg)">
+        style="background-image:url({{ asset('assets/frontend-module') }}/images/web/banner.png)">
         <div class="banner-text">
             <div class="container">
                 <div class="row">
@@ -15,7 +15,6 @@
             </div><!-- Container end -->
         </div><!-- Banner text end -->
     </div><!-- Banner area end -->
-
     <section id="main-container" class="main-container">
         <div class="container">
 

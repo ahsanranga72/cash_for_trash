@@ -28,7 +28,7 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1, 'user_type' => CUSTOMER], $request->remember)) {
-            return redirect()->route('home')->with('success', AUTH_REGISTER_200['message']);
+            return redirect()->route('home')->with('success', AUTH_LOGIN_200['message']);
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'))

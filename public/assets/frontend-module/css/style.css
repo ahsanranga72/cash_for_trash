@@ -535,7 +535,8 @@ a[href^=tel] {
 
 .btn-primary:hover,
 .btn-dark:hover,
-.btn-white.btn-primary:hover {
+.btn-white.btn-primary:hover,
+.btn-primary.active {
   background: #111;
   color: #fff;
 }

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\AgentModule\app\Models\Agent;
 use Modules\AgentModule\app\Models\Location;
+use Modules\FrontendModule\app\Models\CustomerAddress;
 
 class User extends Authenticatable
 {
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function location()
     {
         return $this->hasOne(Location::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(CustomerAddress::class, 'user_id', 'id');
     }
 }

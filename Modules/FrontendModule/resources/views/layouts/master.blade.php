@@ -38,6 +38,7 @@
             color: #ffb600 !important;
         }
     </style>
+    <link href="{{ asset('assets/admin-module') }}/css/icons.css" rel="stylesheet" />
     @stack('css')
 </head>
 
@@ -156,9 +157,28 @@
                     closeOnConfirm: false,
                     closeOnCancel: true
                 }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         window.location.href = "{{ route('customer.auth.login') }}";
+                    }
+                    return false;
+                });
+            }
+
+            function alert_function(id) {
+                "use strict";
+                Swal.fire({
+                    title: "Are you sure !",
+                    text: "",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ff9800",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        jQuery('#' + id).submit();
                     }
                     return false;
                 });

@@ -50,26 +50,6 @@ const AUTH_LOGIN_403 = [
     'message' => 'wrong credentials'
 ];
 
-const AUTH_INACTIVE_403 = [
-    'message' => 'user is blocked'
-];
-
-const DEFAULT_OTP_SENT_200 = [
-    'message' => 'OTP has been sent successfully'
-];
-
-const DEFAULT_200_VERIFIED = [
-    'message' => 'successfully verified'
-];
-
-const DEFAULT_200_PASSWORD_NOT_MATCH = [
-    'message' => 'Old Password not match'
-];
-
-const DEFAULT_200_PASSWORD_RESET = [
-    'message' => 'Password successfully reset'
-];
-
 const DEFAULT_200_USER_REMOVED = [
     'message' => 'successfully removed account'
 ];
@@ -78,18 +58,6 @@ const DEFAULT_USER_404 = [
     'message' => 'User not found'
 ];
 
-const REMOVE_FROM_WISHLIST_200 = [
-    'message' => 'Successfully removed from wishlist'
-];
-
-const ADDED_TO_WISHLIST_200 = [
-    'message' => 'Successfully added to wishlist'
-];
-
-const SOMETHING_WRONG_400 = [
-    'message' => 'Something wrong'
-];
-
-const DEFAULT_LOGOUT_200 = [
-    'message' => 'Successfully logged out'
+const ORDER_SUBMIT_200 = [
+    'message' => 'Your request successfully submited'
 ];
