@@ -19,12 +19,6 @@ class AddressController extends Controller
         $this->customer_address = $customer_address;
         $this->location = $location;
     }
-
-    public function select_address()
-    {
-        $locations = $this->location->active()->get();
-        return view('frontendmodule::customer.address.select-address', compact('locations'));
-    }
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +53,7 @@ class AddressController extends Controller
         $customer_address->address = $request['address'];
         $customer_address->save();
 
-        return redirect()->route('customer.addresses.select-address')->with('success', DEFAULT_200_STORE['message']);
+        return back()->with('success', DEFAULT_200_STORE['message']);
     }
 
     /**

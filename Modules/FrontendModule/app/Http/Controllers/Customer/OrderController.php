@@ -7,17 +7,26 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\AgentModule\app\Models\Agent;
+use Modules\AgentModule\app\Models\Location;
 use Modules\FrontendModule\app\Models\Order;
 
 class OrderController extends Controller
 {
     private $order;
     private $agent;
+    private $location;
 
-    public function __construct(Order $order, Agent $agent)
+    public function __construct(Order $order, Agent $agent, Location $location)
     {
         $this->order = $order;
         $this->agent = $agent;
+        $this->location = $location;
+    }
+
+    public function sell_request()
+    {
+        $locations = $this->location->active()->get();
+        return view('frontendmodule::customer.sell-request', compact('locations'));
     }
     /**
      * Display a listing of the resource.

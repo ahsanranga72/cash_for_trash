@@ -38,7 +38,7 @@
                                 </div><!-- Pricing header -->
                                 <div class="plan-action mt-3" style="padding-bottom: 20px;">
                                     @if (auth()->check() && auth()->user()->user_type == CUSTOMER)
-                                        <a href="{{ route('customer.select-address', $product['id']) }}" class="btn btn-primary">Sell
+                                        <a href="{{ route('customer.sell-request', $product['id']) }}" class="btn btn-primary">Sell
                                             Now</a>
                                     @else
                                         <a href="javascript:void(0)" onclick="login_alert()" class="btn btn-primary">Sell

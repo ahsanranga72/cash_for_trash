@@ -38,7 +38,7 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
     });
     Route::group(['middleware' => 'customer'], function () {
         Route::resource('addresses', 'AddressController');
-        Route::get('select-address/{product_id}', 'AddressController@select_address')->name('select-address');
+        Route::get('sell-request/{product_id}', 'OrderController@sell_request')->name('sell-request');
         Route::post('order-submit', 'OrderController@order_submit')->name('order-submit');
         Route::get('dashboard/{slug}', 'DashboardController@dashboard')->name('dashboard');
         Route::put('profile-update', 'ProfileController@profile_update')->name('profile-update');

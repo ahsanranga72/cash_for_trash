@@ -67,6 +67,50 @@
                         </table>
                     @endif
                     @if (request()->route()->parameters['slug'] == 'addresses')
+                        <button type="button" class="btn btn-primary w-25 mb-3" data-toggle="modal"
+                            data-target="#exampleModal">
+                            Add Address
+                        </button>
+                        <!-- Add address Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ route('customer.addresses.store') }}" method="POST"
+                                        name="add-address">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="name" class="col-form-label">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="mobile" class="col-form-label">Mobile</label>
+                                                <input type="text" class="form-control" id="mobile" name="mobile"
+                                                    placeholder="mobile">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address" class="col-form-label">Address</label>
+                                                <textarea class="form-control" id="address" name="address" placeholder="address"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         <table class="table">
                             <thead>
                                 <tr>
@@ -101,7 +145,7 @@
                                         </td>
                                     </tr>
 
-                                    <!-- Modal -->
+                                    <!-- Edit Address Modal -->
                                     <div class="modal fade" id="exampleModal-{{ $address->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -114,7 +158,7 @@
                                                     </button>
                                                 </div>
                                                 <form action="{{ route('customer.addresses.update', $address->id) }}"
-                                                    method="POST">
+                                                    method="POST" name="edit-address">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="modal-body">
@@ -209,6 +253,50 @@
                         email: "Please enter a valid email address",
                         phone: {
                             required: "Please enter your phone number",
+                        }
+                    },
+                    submitHandler: function(form) {
+                        form.submit();
+                    }
+                });
+            });
+            $(function() {
+                $("form[name='add-address']").validate({
+                    rules: {
+                        name: "required",
+                        address: "required",
+                        mobile: {
+                            required: true,
+                            phoneBD: true,
+                        },
+                    },
+                    messages: {
+                        name: "Please enter your name",
+                        address: "Please enter your address",
+                        mobile: {
+                            required: "Please enter your mobile number",
+                        }
+                    },
+                    submitHandler: function(form) {
+                        form.submit();
+                    }
+                });
+            });
+            $(function() {
+                $("form[name='edit-address']").validate({
+                    rules: {
+                        name: "required",
+                        address: "required",
+                        mobile: {
+                            required: true,
+                            phoneBD: true,
+                        },
+                    },
+                    messages: {
+                        name: "Please enter your name",
+                        address: "Please enter your address",
+                        mobile: {
+                            required: "Please enter your mobile number",
                         }
                     },
                     submitHandler: function(form) {

@@ -6,6 +6,10 @@
             margin-top: -40px;
             margin-right: 10px;
         }
+
+        form .error {
+            color: #ff0000;
+        }
     </style>
 @endpush
 
@@ -100,7 +104,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('customer.addresses.store') }}" method="POST">
+                    <form action="{{ route('customer.addresses.store') }}" method="POST" name="add-address">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
@@ -127,3 +131,36 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(function() {
+                $("form[name='add-address']").validate({
+                    rules: {
+                        name: "required",
+                        address: "required",
+                        mobile: {
+                            required: true,
+                            phoneBD: true,
+                        },
+                    },
+                    messages: {
+                        name: "Please enter your name",
+                        address: "Please enter your address",
+                        mobile: {
+                            required: "Please enter your mobile number",
+                        }
+                    },
+                    submitHandler: function(form) {
+                        form.submit();
+                    }
+                });
+            });
+            $.validator.addMethod("phoneBD", function(phoneNumber, element) {
+                phoneNumber = phoneNumber.replace(/\s+/g, "");
+                return this.optional(element) || phoneNumber.match(/^(?:\+8801\d{9}|\d{11})$/);
+            }, "Please enter a valid Bangladeshi mobile number");
+        })
+    </script>
+@endpush
