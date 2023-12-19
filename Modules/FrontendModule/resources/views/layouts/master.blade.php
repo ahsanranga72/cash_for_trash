@@ -15,7 +15,7 @@
 
     <!-- Favicon
 ================================================== -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/fav.png') }}">
 
     <!-- CSS
 ================================================== -->

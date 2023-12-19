@@ -34,7 +34,7 @@
                         </span>
                         <div class="ts-service-box-content">
                             <h4>Visit Our Office</h4>
-                            <p>9051 Constra Incorporate, USA</p>
+                            <p>Dhaka, Bangladesh</p>
                         </div>
                     </div>
                 </div><!-- Col 1 end -->
@@ -46,7 +46,7 @@
                         </span>
                         <div class="ts-service-box-content">
                             <h4>Email Us</h4>
-                            <p>office@Constra.com</p>
+                            <p>info@cashfortrash.com</p>
                         </div>
                     </div>
                 </div><!-- Col 2 end -->
@@ -58,7 +58,7 @@
                         </span>
                         <div class="ts-service-box-content">
                             <h4>Call Us</h4>
-                            <p>(+9) 847-291-4353</p>
+                            <p>+880 1711 112233</p>
                         </div>
                     </div>
                 </div><!-- Col 3 end -->
