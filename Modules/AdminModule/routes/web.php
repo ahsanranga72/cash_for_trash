@@ -34,5 +34,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
                 Route::any('data/status-update/{id}', 'CategoryController@status_update')->name('status-update');
             });
         });
+        //customer
+        Route::get('customer-list', 'CustomerController@list')->name('customer-list');
+        Route::delete('customer-destroy/{id}', 'CustomerController@destroy')->name('customer-destroy');
+        //orders
+        Route::get('orders/{status}', 'OrderController@list')->name('orders');
+        Route::get('order-show/{id}', 'OrderController@show')->name('order-show');
     });
 });

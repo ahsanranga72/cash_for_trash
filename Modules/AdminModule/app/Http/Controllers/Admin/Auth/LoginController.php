@@ -41,6 +41,6 @@ class LoginController extends Controller
     {
         auth()->logout();
         $request->session()->invalidate();
-        return redirect()->route('home')->with('success', DEFAULT_LOGOUT_200['message']);
+        return redirect()->route('home')->with('success', AUTH_LOGOUT_200['message']);
     }
 }
