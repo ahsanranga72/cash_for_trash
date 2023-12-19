@@ -52,8 +52,7 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('customer.dashboard', 'orders') }}">Dashboard</a>
                                             </li>
-                                            <li><a href="javascript:void(0)"
-                                                    onclick="alert_function('logout-form')">Log
+                                            <li><a href="javascript:void(0)" onclick="alert_function('logout-form')">Log
                                                     out</a></li>
                                         </ul>
                                     </li>

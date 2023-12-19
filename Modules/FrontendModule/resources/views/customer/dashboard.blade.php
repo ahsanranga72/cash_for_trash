@@ -1,6 +1,11 @@
 @extends('frontendmodule::layouts.master')
 
 @push('css')
+    <style>
+        form .error {
+            color: #ff0000;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -149,28 +154,28 @@
                         </table>
                     @endif
                     @if (request()->route()->parameters['slug'] == 'profile')
-                        <form action="{{ route('customer.profile-update') }}" method="POST">
+                        <form action="{{ route('customer.profile-update') }}" method="POST" name="profile">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
                                 <label for="first_name" class="col-form-label">First name</label>
                                 <input type="text" class="form-control" id="first_name" name="first_name"
-                                    placeholder="first name" value="{{ $user->first_name }}">
+                                    placeholder="first name" value="{{ $user->first_name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name" class="col-form-label">Last name</label>
                                 <input type="text" class="form-control" id="last_name" name="last_name"
-                                    placeholder="last name" value="{{ $user->last_name }}">
+                                    placeholder="last name" value="{{ $user->last_name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="email" value="{{ $user->email }}">
+                                    placeholder="email" value="{{ $user->email }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="col-form-label">Phone</label>
+                                <label for="phone" class="col-form-label">Mobile</label>
                                 <input type="text" class="form-control" id="phone" name="phone"
-                                    placeholder="phone" value="{{ $user->phone }}">
+                                    placeholder="phone" value="{{ $user->phone }}" required>
                             </div>
                             <button type="submit" class="btn btn-primary float-right">Update</button>
                         </form>
@@ -180,3 +185,41 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(function() {
+                $("form[name='profile']").validate({
+                    rules: {
+                        first_name: "required",
+                        last_name: "required",
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        phone: {
+                            required: true,
+                            phoneBD: true,
+                        },
+                    },
+                    messages: {
+                        first_name: "Please enter your first name",
+                        last_name: "Please enter your last name",
+                        email: "Please enter a valid email address",
+                        phone: {
+                            required: "Please enter your phone number",
+                        }
+                    },
+                    submitHandler: function(form) {
+                        form.submit();
+                    }
+                });
+            });
+            $.validator.addMethod("phoneBD", function(phoneNumber, element) {
+                phoneNumber = phoneNumber.replace(/\s+/g, "");
+                return this.optional(element) || phoneNumber.match(/^(?:\+8801\d{9}|\d{11})$/);
+            }, "Please enter a valid Bangladeshi mobile number");
+        })
+    </script>
+@endpush
