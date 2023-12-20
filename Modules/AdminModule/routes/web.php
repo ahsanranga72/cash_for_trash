@@ -40,5 +40,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         //orders
         Route::get('orders/{status}', 'OrderController@list')->name('orders');
         Route::get('order-show/{id}', 'OrderController@show')->name('order-show');
+        Route::post('order-status-change/{id}', 'OrderController@status_change')->name('order-status-change');
     });
 });

@@ -21,7 +21,14 @@ class OrderController extends Controller
      */
     public function list($status)
     {
-        $orders = $this->order->with('customer', 'agent')->latest()->paginate(10);
+        $orders = $this->order;
+
+        if($status != ORDER_STATUS['all']){
+            $orders = $orders->where('status', $status);
+        }
+
+        $orders = $orders->with('customer', 'agent')->latest()->paginate(10);
+
         return view('adminmodule::order.list', compact('orders'));
     }
 
@@ -37,32 +44,12 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function status_change(Request $request, $id)
     {
-        //
-    }
+        $order = $this->order->findOrFail($id);
+        $order->status = $request['order_status'];
+        $order->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('adminmodule::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->with('success', DEFAULT_200_UPDATE['message']);
     }
 }

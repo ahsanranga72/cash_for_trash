@@ -32,19 +32,39 @@
                 <li class="sub-category">
                     <h3>Order</h3>
                 </li>
-                <li class="slide {{ request()->segment(2) == 'orders' ? 'active is-expanded' : '' }}">
-                    <a class="side-menu__item {{ request()->segment(2) == 'orders' ? 'active is-expanded' : '' }}"
+                <li class="slide {{ request()->is('admin/order*') ? 'active is-expanded' : '' }}">
+                    <a class="side-menu__item {{ request()->is('admin/order*') ? 'active is-expanded' : '' }}"
                         data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-zap"></i><span
                             class="side-menu__label">Orders</span><i class="angle fe fe-chevron-right"></i></a>
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.orders', ORDER_STATUS['all']) }}"
-                                class="slide-item {{ request()->is('admin/orders/all') ? 'active' : '' }}">
-                                All</a></li>
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/all') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['all'] }}</a></li>
                     </ul>
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.products.category.index') }}"
-                                class="slide-item {{ request()->is('admin/products/category') ? 'active' : '' }}">
-                                List</a></li>
+                        <li><a href="{{ route('admin.orders', ORDER_STATUS['pending']) }}"
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/pending') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['pending'] }}</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.orders', ORDER_STATUS['processing']) }}"
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/processing') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['processing'] }}</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.orders', ORDER_STATUS['completed']) }}"
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/completed') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['completed'] }}</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.orders', ORDER_STATUS['cancelled']) }}"
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/cancelled') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['cancelled'] }}</a></li>
+                    </ul>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.orders', ORDER_STATUS['postponed']) }}"
+                                class="slide-item text-capitalize {{ request()->is('admin/orders/postponed') ? 'active' : '' }}">
+                                {{ ORDER_STATUS['postponed'] }}</a></li>
                     </ul>
                 </li>
                 <li class="sub-category">
