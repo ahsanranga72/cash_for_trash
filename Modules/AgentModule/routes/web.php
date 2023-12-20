@@ -14,7 +14,24 @@ use Modules\AgentModule\app\Http\Controllers\AgentModuleController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//agent
+Route::group(['namespace' => 'Agent', 'prefix' => 'agent', 'as' => 'agent.'], function () {
+    /*auth*/
+    Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::get('login', 'LoginController@login')->name('login');
+        Route::post('login', 'LoginController@submit')->name('login');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+    });
 
+    Route::group(['middleware' => ['agent']], function () {
+        Route::get('/', 'AgentController@index')->name('dashboard');
+        //orders
+        Route::get('orders/{status}', 'OrderController@list')->name('orders');
+        Route::get('order-show/{id}', 'OrderController@show')->name('order-show');
+        Route::post('order-status-change/{id}', 'OrderController@status_change')->name('order-status-change');
+    });
+});
+//admin
 Route::group(['middleware' => ['admin'], 'namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('agent', 'AgentController')->except('show');
     Route::group(['prefix' => 'agent', 'as' => 'agent.'], function () {
@@ -28,4 +45,3 @@ Route::group(['middleware' => ['admin'], 'namespace' => 'Admin', 'prefix' => 'ad
         });
     });
 });
-

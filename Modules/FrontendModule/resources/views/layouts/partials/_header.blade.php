@@ -39,7 +39,7 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Agent
                                         <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Log in</a></li>
+                                        <li><a href="{{ route('agent.auth.login') }}">Log in</a></li>
                                         <li><a href="#">Become a Agent</a></li>
                                     </ul>
                                 </li>
