@@ -69,7 +69,8 @@
                             </div>
                             <div class="col-md-6 col-lg-6 col-xl-6 order-1 order-lg-2">
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Log in</p>
-                                <form class="mx-1 mx-md-4" action="{{ route('customer.auth.login') }}" method="POST" name="login">
+                                <form class="mx-1 mx-md-4" action="{{ route('customer.auth.login') }}" method="POST"
+                                    name="login">
                                     @csrf
                                     <div class="d-flex flex-row align-items-center mb-3">
                                         <div class="form-outline flex-fill mb-0">
