@@ -28,7 +28,7 @@ Route::get('about-us', function () {
 })->name('about-us');
 
 Route::get('products/rate', 'FrontendModuleController@products_rate')->name('products.rate');
-
+//customer
 Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('login', 'LoginController@login_form')->name('login');
@@ -43,4 +43,9 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
         Route::get('dashboard/{slug}', 'DashboardController@dashboard')->name('dashboard');
         Route::put('profile-update', 'ProfileController@profile_update')->name('profile-update');
     });
+});
+//agent
+Route::group(['namespace' => 'Agent', 'prefix' => 'agent', 'as' => 'agent.'], function () {
+    Route::get('request-form', 'AgentController@request_form')->name('request-form');
+    Route::post('request-form-submit', 'AgentController@request_form_submit')->name('request-form-submit');
 });

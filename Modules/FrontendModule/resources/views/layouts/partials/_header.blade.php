@@ -40,7 +40,7 @@
                                         <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ route('agent.auth.login') }}">Log in</a></li>
-                                        <li><a href="#">Become a Agent</a></li>
+                                        <li><a href="{{ route('agent.request-form') }}">Become a Agent</a></li>
                                     </ul>
                                 </li>
                                 @if (auth()->check() && auth()->user()->user_type == CUSTOMER)
