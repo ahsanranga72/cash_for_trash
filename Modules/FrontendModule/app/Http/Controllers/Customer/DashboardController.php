@@ -25,7 +25,7 @@ class DashboardController extends Controller
     public function dashboard($slug)
     {
         if ($slug === 'orders') {
-            $orders = $this->order->with('product', 'address')->get();
+            $orders = $this->order->where('user_id', auth()->user()->id)->with('product', 'address')->get();
             return view('frontendmodule::customer.dashboard', compact('orders'));
         }
 
