@@ -61,3 +61,11 @@ const DEFAULT_USER_404 = [
 const ORDER_SUBMIT_200 = [
     'message' => 'Your request successfully submited'
 ];
+
+const AGENT_EXIST_400 = [
+    'message' => 'An agent already have this location'
+];
+
+const AGENT_REQUEST_SUBMITTED_200 = [
+    'message' => 'Agent request successfully submited'
+];

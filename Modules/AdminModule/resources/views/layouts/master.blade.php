@@ -6,7 +6,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets') }}/fav.png" />
+    <link rel="icon" type="image/png" href="{{ asset('assets/fav.png') }}">
     <title>@yield('page_title')</title>
     <link id="style" href="{{ asset('assets/admin-module') }}/plugins/bootstrap/css/bootstrap.min.css"
         rel="stylesheet" />

@@ -8,7 +8,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/admin-module') }}/images/brand/favicon.ico" />
+    <link rel="icon" type="image/png" href="{{ asset('assets/fav.png') }}">
     <!-- TITLE -->
     <title>Agent login</title>
 
