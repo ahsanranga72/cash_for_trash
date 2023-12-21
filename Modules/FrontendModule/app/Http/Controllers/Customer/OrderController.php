@@ -25,7 +25,10 @@ class OrderController extends Controller
 
     public function sell_request()
     {
-        $locations = $this->location->active()->get();
+        $locations = Location::whereHas('agent', function ($query) {
+            $query->whereNotNull('location_id');
+        })->get();
+
         return view('frontendmodule::customer.sell-request', compact('locations'));
     }
     /**

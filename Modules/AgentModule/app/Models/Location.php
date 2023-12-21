@@ -24,4 +24,9 @@ class Location extends Model
     {
         return $query->where('is_active', 1 );
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class, 'id', 'location_id');
+    }
 }

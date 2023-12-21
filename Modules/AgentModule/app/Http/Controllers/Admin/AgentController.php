@@ -64,6 +64,11 @@ class AgentController extends Controller
             'password_confirmation' => 'required|min:8',
         ]);
 
+        $agent_exist_in_location = $this->agent->where('location_id', $request['location_id'])->first();
+        if ($agent_exist_in_location) {
+            return back()->with('error', AGENT_EXIST_400['message']);
+        }
+
         $user = $this->user;
         $user->first_name = $request['first_name'];
         $user->last_name = $request['last_name'];
