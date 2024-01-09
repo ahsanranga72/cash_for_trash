@@ -6,15 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\FrontendModule\app\Models\Order;
 
 class AgentController extends Controller
 {
+    private $order;
+
+    public function __construct(Order $order)
+    {
+        $this->order = $order;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('agentmodule::dashboard');
+        $orders = $this->order->where('agent_id', auth()->user()->agent->id)
+                ->with('customer', 'agent')->latest()->paginate(10);
+        return view('agentmodule::dashboard', compact('orders'));
     }
 
     /**

@@ -6,15 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\FrontendModule\app\Models\Order;
 
 class AdminController extends Controller
-{
+{private $order;
+
+    public function __construct(Order $order)
+    {
+        $this->order = $order;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('adminmodule::dashboard');
+        $orders = $this->order->with('customer', 'agent')->latest()->paginate(10);
+        return view('adminmodule::dashboard', compact('orders'));
     }
 
     /**
