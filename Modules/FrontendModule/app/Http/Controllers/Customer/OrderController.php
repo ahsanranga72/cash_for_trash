@@ -66,6 +66,8 @@ class OrderController extends Controller
         $order->customer_note_1 = $request['customer_note_1'];
         $order->save();
 
+        session()->forget('cart');
+
         return redirect()->route('home')->with('success', ORDER_SUBMIT_200['message']);
     }
 
