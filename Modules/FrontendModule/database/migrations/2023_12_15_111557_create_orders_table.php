@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable();
-            $table->foreignId('product_id')->nullable();
+            $table->json('product_ids')->nullable();
+            $table->json('images')->nullable();
+            $table->integer('trash_weight')->nullable();
+            $table->string('customer_note_1')->nullable();
+            $table->string('customer_note_2')->nullable();
+            $table->string('agent_note')->nullable();
             $table->foreignId('address_id')->nullable();
             $table->foreignId('location_id')->nullable();
             $table->foreignId('agent_id')->nullable();

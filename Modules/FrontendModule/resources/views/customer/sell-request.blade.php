@@ -24,10 +24,45 @@
         </div><!-- Row end -->
     </div><!-- Container end -->
     <div class="container mt-4">
-        <form action="{{ route('customer.order-submit') }}" method="POST" id="address-form">
+        <form action="{{ route('customer.order-submit') }}" method="POST" id="address-form" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="product_id" value="{{ request()->route()->parameters['product_id'] }}">
             <div class="row">
+                <div class="col-md-12">
+                    <div class="card mt-2 mb-4">
+                        <div class="card-header">
+                            <h3>Added Products</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Name</th>
+                                        <th>Rate</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($products as $key => $product)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $product['name'] }}</td>
+                                            <td>{{ $product['price'] }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ route('customer.product-remove-from-cart', $product['id']) }}"
+                                                    class="btn btn-sm btn-warning">Remove</a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">Please add one first !</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Add Address
@@ -70,18 +105,38 @@
                 <div class="col-md-12">
                     <div class="card mt-2 mb-4">
                         <div class="card-header">
-                            <h3>Select Nearest Agent Point</h3>
+                            <h3>Generale informations</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="location_id">Agent point</label>
                                         <select name="location_id" id="location_id" class="form-control">
                                             <option selected disabled>Select nearest agent point</option>
                                             @foreach ($locations as $location)
-                                                <option value="{{ $location['id'] }}">{{ $location['area_name'] }}</option>
+                                                <option value="{{ $location['id'] }}">{{ $location['area_name'] }}
+                                                </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="trash_images">Trash images ( multiple )</label>
+                                        <input type="file" class="form-control" name="trash_images[]" id="trash_images" multiple>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="trash_weight">Trash estimated weight</label>
+                                        <input type="number" class="form-control" name="trash_weight" id="trash_weight" placeholder="Enter weight in kg (ex:12)">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="customer_note_1">Note</label>
+                                        <input type="text" class="form-control" name="customer_note_1" id="customer_note_1" placeholder="Enter your note">
                                     </div>
                                 </div>
                             </div>
