@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\AdminModule\app\Models\Product;
 use Modules\FrontendModule\app\Models\CustomerAddress;
 use Modules\FrontendModule\app\Models\Order;
 
@@ -25,7 +26,11 @@ class DashboardController extends Controller
     public function dashboard($slug)
     {
         if ($slug === 'orders') {
-            $orders = $this->order->where('user_id', auth()->user()->id)->with('product', 'address')->get();
+            $orders = $this->order->where('user_id', auth()->user()->id)->with('address')->get();
+            foreach($orders as $order)
+            {
+                $order['products'] = Product::whereIn('id', json_decode($order->product_ids, true))->get();
+            }
             return view('frontendmodule::customer.dashboard', compact('orders'));
         }
 

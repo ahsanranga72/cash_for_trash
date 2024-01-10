@@ -71,6 +71,21 @@ class OrderController extends Controller
         return redirect()->route('home')->with('success', ORDER_SUBMIT_200['message']);
     }
 
+    public function order_add_note(Request $request, $id)
+    {
+        $order = $this->order->find($id);
+        $order['customer_note_2'] = $request['note'];
+        $order->save();
+
+        return back()->with('success', DEFAULT_200_STORE['message']);
+    }
+
+    public function order_delete($id)
+    {
+        $this->order->find($id)->delete();
+        return back()->with('success', DEFAULT_200_DELETE['message']);
+    }
+
     public function add_to_cart(Request $request)
     {
         $productId = $request->input('product_id');

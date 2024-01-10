@@ -17,16 +17,15 @@ class Order extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
-    
+
     protected static function newFactory(): OrderFactory
     {
         //return OrderFactory::new();
     }
 
-    public function product()
+    public function products()
     {
-        return $this->hasOne(Product::class, 'id', 'product_id');
+        return Product::whereIn('id', $this->product_ids)->get();
     }
 
     public function address()

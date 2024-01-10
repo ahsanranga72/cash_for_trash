@@ -21,7 +21,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <a class="btn btn-lg btn-success float-right" href="{{ route('customer.sell-request') }}">Procced to checkout</a>
+                    @if (auth()->check() && auth()->user()->user_type == CUSTOMER)
+                        <a class="btn btn-lg btn-success float-right" href="{{ route('customer.sell-request') }}">Procced to
+                            checkout</a>
+                    @else
+                        <a class="btn btn-lg btn-success float-right" href="javascript:void(0)"
+                            onclick="login_alert()">Procced to
+                            checkout</a>
+                    @endif
                 </div>
             </div>
             @forelse ($categories as $category)
