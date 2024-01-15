@@ -31,12 +31,13 @@ class OrderController extends Controller
         if (empty(session('cart', []))) {
             return redirect()->route('products.rate')->withErrors('Please add products first.');
         }
+        $select_products = $this->product->active()->get();
         $products = $this->product->whereIn('id', session('cart', []))->get();
         $locations = Location::whereHas('agent', function ($query) {
             $query->whereNotNull('location_id');
         })->get();
 
-        return view('frontendmodule::customer.sell-request', compact('locations', 'products'));
+        return view('frontendmodule::customer.sell-request', compact('locations', 'products', 'select_products'));
     }
     /**
      * Display a listing of the resource.
@@ -46,6 +47,9 @@ class OrderController extends Controller
         $request->validate([
             'address_id' => 'required',
             'location_id' => 'required',
+            'trash_weight' => 'required',
+            'available_date' => 'required',
+            'available_time' => 'required',
         ]);
 
         $order = $this->order;
@@ -53,7 +57,6 @@ class OrderController extends Controller
         $order->product_ids = json_encode(session('cart', []));
         $order->address_id = $request['address_id'];
         $order->location_id = $request['location_id'];
-        $order->agent_id = $this->agent->where('location_id', $request['location_id'])->first()->id ?? 0;
 
         $imagePaths = [];
         if ($request->hasFile('trash_images')) {
@@ -61,14 +64,33 @@ class OrderController extends Controller
                 $imagePaths[] = image_uploader('order/', 'png', $image, null);
             }
         }
+
         $order->images = json_encode($imagePaths);
         $order->trash_weight = $request['trash_weight'];
         $order->customer_note_1 = $request['customer_note_1'];
+        $order->available_date = $request['available_date'];
+        $order->available_time = $request['available_time'];
         $order->save();
 
         session()->forget('cart');
 
         return redirect()->route('home')->with('success', ORDER_SUBMIT_200['message']);
+    }
+
+    public function order_details($id)
+    {
+        $order = $this->order->find($id);
+        $order['products'] = Product::whereIn('id', json_decode($order->product_ids, true))->get();
+
+        return view('frontendmodule::customer.order.details', compact('order'));
+    }
+
+    public function order_edit($id)
+    {
+        $order = $this->order->find($id);
+        $order['products'] = Product::whereIn('id', json_decode($order->product_ids, true))->get();
+
+        return view('frontendmodule::customer.order.details', compact('order'));
     }
 
     public function order_add_note(Request $request, $id)
@@ -113,6 +135,20 @@ class OrderController extends Controller
         session(['cart' => array_values($cart)]);
 
         return response()->json(['success' => true]);
+    }
+
+    public function product_add_to_cart(Request $request)
+    {
+        $productId = $request->input('select_product');
+        $cart = session()->get('cart', []);
+
+        if (!in_array($productId, $cart)) {
+            $cart[] = $productId;
+        }
+
+        session(['cart' => $cart]);
+
+        return back()->with(['success' => 'Successfully added.']);
     }
 
     public function product_remove_from_cart($id)

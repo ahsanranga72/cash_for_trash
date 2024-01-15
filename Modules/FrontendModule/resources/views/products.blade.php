@@ -45,7 +45,7 @@
                                     <h2 class="ts-pricing-name">{{ $product['name'] }}</h2>
                                     <h2 class="ts-pricing-price">
                                         <span
-                                            class="currency">$</span><strong>{{ $product['price'] }}</strong><small>/KG</small>
+                                            class="currency">৳ </span><strong>{{ $product['price'] }}</strong><small>/KG</small>
                                     </h2>
                                 </div><!-- Pricing header -->
                                 <div class="plan-action mt-3" style="padding-bottom: 20px;">

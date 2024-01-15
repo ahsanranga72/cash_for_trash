@@ -46,7 +46,6 @@
                                     <th scope="col">Products</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Agent comment</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -65,53 +64,20 @@
                                         </td>
                                         <td>{{ $order->address->address }}</td>
                                         <td>{{ $order->status }}</td>
-                                        <td>{{ $order->agent_note }}</td>
                                         <td>
                                             @if ($order->status === ORDER_STATUS['pending'])
+                                                <a class="btn btn-primary p-1" href="{{ route('customer.order-details', $order->id) }}"
+                                                    style="font-size: 10px; font-weight: 500;">
+                                                    Details
+                                                </a>
+                                                <a class="btn btn-primary p-1" href="{{ route('customer.order-edit', $order->id) }}"
+                                                    style="font-size: 10px; font-weight: 500;">
+                                                    Edit
+                                                </a>
                                                 <a class="btn btn-primary p-1" href="{{ route('customer.order-delete', $order->id) }}"
-                                                    style="font-size: 12px; font-weight: 300;">
+                                                    style="font-size: 10px; font-weight: 500;">
                                                     Delete
                                                 </a>
-                                                <button type="button" class="btn btn-primary p-1"
-                                                    style="font-size: 12px; font-weight: 300;" data-toggle="modal"
-                                                    data-target="#add-note-{{ $order->id }}">
-                                                    Add note
-                                                </button>
-                                                <!-- Add address Modal -->
-                                                <div class="modal fade" id="add-note-{{ $order->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Add Note
-                                                                </h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form action="{{ route('customer.order-add-note', $order->id) }}"
-                                                                method="POST" name="add-address">
-                                                                @csrf
-                                                                <div class="modal-body">
-                                                                    <div class="form-group">
-                                                                        <label for="name"
-                                                                            class="col-form-label">Note</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="note" name="note"
-                                                                            placeholder="Enter note">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Close</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Submit</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             @endif
                                         </td>
                                     </tr>
