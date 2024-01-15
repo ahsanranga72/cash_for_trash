@@ -58,7 +58,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Agent::class);
     }
-    
+
     public function location()
     {
         return $this->hasOne(Location::class);

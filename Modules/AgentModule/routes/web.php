@@ -25,6 +25,9 @@ Route::group(['namespace' => 'Agent', 'prefix' => 'agent', 'as' => 'agent.'], fu
 
     Route::group(['middleware' => ['agent']], function () {
         Route::get('/', 'AgentController@index')->name('dashboard');
+        Route::get('profile', 'AgentController@profile')->name('profile');
+        Route::post('profile-update', 'AgentController@profile_update')->name('profile-update');
+        Route::post('password-update', 'AgentController@password_update')->name('password-update');
         //orders
         Route::get('orders/{status}', 'OrderController@list')->name('orders');
         Route::get('order-show/{id}', 'OrderController@show')->name('order-show');
