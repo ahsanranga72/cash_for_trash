@@ -18,7 +18,7 @@
                         @if (!empty(json_decode($order['images'], true)))
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-5">
                                 <h5 class="fw-bold">Images</h5>
-                                <div class="d-flex">
+                                <div class="d-flex gap-2">
                                     @forelse (json_decode($order['images'], true) as $image)
                                         <img src="{{ asset('storage/order') }}/{{ $image }}" alt=""
                                             height="100" width="100" class="mx-2">
@@ -51,8 +51,8 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6 mt-3">
                             <h5 class="fw-bold">Customer Address</h5>
                             <p>Name: {{ $order->address->name ?? '' }}</p>
-                            <p>Email: {{ $order->address->mobile ?? '' }}</p>
-                            <p>Phone: {{ $order->address->address ?? '' }}</p>
+                            <p>Phone: {{ $order->address->mobile ?? '' }}</p>
+                            <p>Address: {{ $order->address->address ?? '' }}</p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6 mt-3">
                             <h5 class="fw-bold">Agent point details</h5>

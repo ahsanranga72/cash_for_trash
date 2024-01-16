@@ -65,16 +65,19 @@
                                         <td>{{ $order->address->address }}</td>
                                         <td>{{ $order->status }}</td>
                                         <td>
+                                            <a class="btn btn-primary p-1"
+                                                href="{{ route('customer.order-details', $order->id) }}"
+                                                style="font-size: 10px; font-weight: 500;">
+                                                Details
+                                            </a>
                                             @if ($order->status === ORDER_STATUS['pending'])
-                                                <a class="btn btn-primary p-1" href="{{ route('customer.order-details', $order->id) }}"
-                                                    style="font-size: 10px; font-weight: 500;">
-                                                    Details
-                                                </a>
-                                                <a class="btn btn-primary p-1" href="{{ route('customer.order-edit', $order->id) }}"
+                                                <a class="btn btn-primary p-1"
+                                                    href="{{ route('customer.order-edit', $order->id) }}"
                                                     style="font-size: 10px; font-weight: 500;">
                                                     Edit
                                                 </a>
-                                                <a class="btn btn-primary p-1" href="{{ route('customer.order-delete', $order->id) }}"
+                                                <a class="btn btn-primary p-1"
+                                                    href="{{ route('customer.order-delete', $order->id) }}"
                                                     style="font-size: 10px; font-weight: 500;">
                                                     Delete
                                                 </a>

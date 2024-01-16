@@ -145,7 +145,7 @@
                                     <td class="align-middle text-center">
                                         {{ ($orders->currentPage() - 1) * $orders->perPage() + $key + 1 }}</td>
                                     <td class="text-nowrap align-middle">{{ $item->customer->first_name }}</td>
-                                    <td class="text-nowrap align-middle">{{ $item->agent->user->first_name ?? 'N/A' }}
+                                    <td class="text-nowrap align-middle">{{ $item->agent->first_name ?? 'N/A' }}
                                     </td>
                                     <td class="text-nowrap align-middle">
                                         <div class="mt-sm-1 d-flex justify-content-center">
@@ -157,7 +157,7 @@
                                         <div class="g-2">
                                             <a class="btn text-primary btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Details"
-                                                href="{{ route('agent.order-show', $item['id']) }}"><span
+                                                href="{{ route('admin.order-show', $item['id']) }}"><span
                                                     class="fe fe-eye fs-14"></span></a>
                                         </div>
                                     </td>
