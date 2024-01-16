@@ -6,22 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\AdminModule\app\Models\Product;
 use Modules\FrontendModule\app\Models\Order;
 
 class OrderController extends Controller
 {
     private $order;
+    private $product;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, Product $product)
     {
         $this->order = $order;
+        $this->product = $product;
     }
     /**
      * Display a listing of the resource.
      */
     public function list($status)
     {
-        $orders = $this->order->where('agent_id', auth()->user()->agent->id);
+        $orders = $this->order->where('agent_user_id', auth()->id());
 
         if ($status != ORDER_STATUS['all']) {
             $orders = $orders->where('status', $status);
@@ -37,7 +40,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = $this->order->with('customer', 'agent', 'address', 'location', 'product')->findOrFail($id);
+        $order = $this->order->with('customer', 'agent', 'address', 'location')->findOrFail($id);
+        $order['products'] = $this->product->whereIn('id', json_decode($order->product_ids, true))->get();
+
         return view('agentmodule::order.show', compact('order'));
     }
 
@@ -46,7 +51,13 @@ class OrderController extends Controller
      */
     public function status_change(Request $request, $id)
     {
+        $request->validate([
+            'agent_note' => 'required', 
+            'order_status' => 'required', 
+        ]);
+
         $order = $this->order->findOrFail($id);
+        $order->agent_note = $request['agent_note'];
         $order->status = $request['order_status'];
         $order->save();
 

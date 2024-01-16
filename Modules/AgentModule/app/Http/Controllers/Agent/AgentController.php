@@ -26,7 +26,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->where('agent_id', auth()->user()->agent->id)
+        $orders = $this->order->where('agent_user_id', auth()->id())
             ->with('customer', 'agent')->latest()->paginate(10);
         return view('agentmodule::dashboard', compact('orders'));
     }

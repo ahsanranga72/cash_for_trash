@@ -109,7 +109,7 @@
                                         <td class="align-middle text-center">
                                             {{ ($orders->currentPage() - 1) * $orders->perPage() + $key + 1 }}</td>
                                         <td class="text-nowrap align-middle">{{ $item->customer->first_name }}</td>
-                                        <td class="text-nowrap align-middle">{{ $item->agent->user->first_name ?? 'N/A' }}
+                                        <td class="text-nowrap align-middle">{{ $item->agent->first_name ?? 'N/A' }}
                                         </td>
                                         <td class="text-nowrap align-middle">
                                             <div class="mt-sm-1 d-flex justify-content-center">

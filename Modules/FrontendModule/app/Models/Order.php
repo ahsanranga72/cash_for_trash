@@ -23,11 +23,6 @@ class Order extends Model
         //return OrderFactory::new();
     }
 
-    public function products()
-    {
-        return Product::whereIn('id', $this->product_ids)->get();
-    }
-
     public function address()
     {
         return $this->hasOne(CustomerAddress::class, 'id', 'address_id');
@@ -40,7 +35,7 @@ class Order extends Model
 
     public function agent()
     {
-        return $this->hasOne(Agent::class, 'id', 'agent_id');
+        return $this->hasOne(User::class, 'id', 'agent_user_id');
     }
 
     public function location()

@@ -51,12 +51,13 @@ class OrderController extends Controller
             'available_date' => 'required',
             'available_time' => 'required',
         ]);
-
+        
         $order = $this->order;
         $order->user_id = auth()->user()->id;
         $order->product_ids = json_encode(session('cart', []));
         $order->address_id = $request['address_id'];
         $order->location_id = $request['location_id'];
+        $order->agent_user_id = $this->agent->where('location_id', $request['location_id'])->first()->user_id ?? 0;
 
         $imagePaths = [];
         if ($request->hasFile('trash_images')) {

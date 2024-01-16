@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('agent_note')->nullable();
             $table->foreignId('address_id')->nullable();
             $table->foreignId('location_id')->nullable();
-            $table->foreignId('agent_id')->nullable();
+            $table->foreignId('agent_user_id')->nullable();
             $table->date('available_date')->nullable();
             $table->time('available_time')->nullable();
             $table->string('status')->default('pending');
