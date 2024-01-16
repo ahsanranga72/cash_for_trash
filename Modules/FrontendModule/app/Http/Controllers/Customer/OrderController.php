@@ -88,9 +88,63 @@ class OrderController extends Controller
     public function order_edit($id)
     {
         $order = $this->order->find($id);
-        $order['products'] = Product::whereIn('id', json_decode($order->product_ids, true))->get();
 
-        return view('frontendmodule::customer.order.details', compact('order'));
+        if (!session()->has('reseted')) {
+            session()->put('reseted', $id);
+            session()->forget('cart');
+            session(['cart' => json_decode($order->product_ids, true)]);
+        }
+        if (session()->has('reseted') && session('reseted') != $id) {
+            session()->put('reseted', $id);
+            session()->forget('cart');
+            session(['cart' => json_decode($order->product_ids, true)]);
+        }
+        $select_products = $this->product->active()->get();
+        $products = $this->product->whereIn('id', session('cart', []))->get();
+        $locations = Location::whereHas('agent', function ($query) {
+            $query->whereNotNull('location_id');
+        })->get();
+
+        return view('frontendmodule::customer.order.edit', compact('order', 'select_products', 'products', 'locations'));
+    }
+
+    public function order_update(Request $request, $id)
+    {
+        $request->validate([
+            'address_id' => 'required',
+            'location_id' => 'required',
+            'trash_weight' => 'required',
+            'available_date' => 'required',
+            'available_time' => 'required',
+        ]);
+
+        $order = $this->order->findOrFail($id);
+        $order->product_ids = json_encode(session('cart', []));
+        $order->address_id = $request['address_id'];
+        $order->location_id = $request['location_id'];
+        $imagePaths = [];
+        if ($request->hasFile('trash_images')) {
+            if (!empty(json_decode($order->images, true))) {
+                foreach (json_decode($order->images, true) as $image) {
+                    file_remover('order/', $image);
+                };
+            }
+            foreach ($request->file('trash_images') as $image) {
+                $imagePaths[] = image_uploader('order/', 'png', $image, null);
+            };
+            $order->images = json_encode($imagePaths);
+        };
+        
+        $order->trash_weight = $request['trash_weight'];
+        $order->customer_note_1 = $request['customer_note_1'];
+        $order->available_date = $request['available_date'];
+        $order->available_time = $request['available_time'];
+        $order->save();
+
+        session()->forget('cart');
+        session()->forget('reseted');
+
+        return redirect()->route('home')->with('success', 'Order sucessfully updated');
     }
 
     public function order_add_note(Request $request, $id)

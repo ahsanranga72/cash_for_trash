@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
         Route::post('order-add-note/{id}', 'OrderController@order_add_note')->name('order-add-note');
         Route::get('order-details/{id}', 'OrderController@order_details')->name('order-details');
         Route::get('order-edit/{id}', 'OrderController@order_edit')->name('order-edit');
+        Route::post('order-update/{id}', 'OrderController@order_update')->name('order-update');
         Route::get('order-delete/{id}', 'OrderController@order_delete')->name('order-delete');
         Route::get('dashboard/{slug}', 'DashboardController@dashboard')->name('dashboard');
         Route::put('profile-update', 'ProfileController@profile_update')->name('profile-update');
