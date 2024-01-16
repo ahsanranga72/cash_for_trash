@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\AdminModule\app\Models\Product;
 use Modules\FrontendModule\app\Models\Order;
 
 class OrderController extends Controller
 {
     private $order;
+    private $product;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, Product $product)
     {
         $this->order = $order;
+        $this->product = $product;
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +40,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = $this->order->with('customer', 'agent', 'address', 'location', 'product')->findOrFail($id);
+        $order = $this->order->with('customer', 'agent', 'address', 'location')->findOrFail($id);
+        $order['products'] = $this->product->whereIn('id', json_decode($order->product_ids, true))->get();
         return view('adminmodule::order.show', compact('order'));
     }
 
