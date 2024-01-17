@@ -4,6 +4,7 @@ namespace Modules\FrontendModule\app\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OtpMail;
+use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,10 +14,12 @@ use Illuminate\Support\Facades\Mail;
 class RegistrationController extends Controller
 {
     private $user;
+    private $otp;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Otp $otp)
     {
         $this->user = $user;
+        $this->otp = $otp;
     }
     /**
      * Display a listing of the resource.
@@ -30,31 +33,27 @@ class RegistrationController extends Controller
             'password_confirmation' => 'required|min:8',
         ]);
 
-        $user = $this->user;
-        $user->first_name = $request['first_name'];
-        $user->last_name = $request['first_name'];
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
-        $user->password = bcrypt($request['password']);
-        $user->user_type = CUSTOMER;
-        if ($request->has('profile_image')) {
-            $user->profile_image = image_uploader('users/profile_images/', 'png', $request['profile_image'], !empty($user['profile_image']) ? $user['profile_image'] : null);
-        }
-        $user->is_active = 1;
-        $user->is_verified = 0;
-        $user->save();
+        $user = [
+            'first_name' => $request['first_name'],
+            'email' => $request['email'],
+            'password' => $request['password'],
+        ];
+
+        session()->forget('user');
+        session()->put('user', $user);
 
         $rand = rand(100000, 999999);
-        Mail::to($user->email)->send(new OtpMail($rand));
+
+        $otp = $this->otp;
+        $otp['email'] = $request['email'];
+        $otp['otp'] = $rand;
+        $otp->save();
+
         
-        return redirect()->route('customer.auth.otp');
 
-        // if (auth()->attempt(['email' => $user->email, 'password' => $request->password, 'is_active' => 1, 'user_type' => CUSTOMER], $request->remember)) {
-        //     return redirect()->route('home')->with('success', AUTH_REGISTER_200['message']);
-        // }
-
-        return redirect()->back()->withInput($request->only('email', 'remember'))
-            ->withErrors(['Something Wrong !']);
+        Mail::to($request->email)->send(new OtpMail($rand, $user));
+        
+        return redirect()->route('customer.auth.otp')->with('success', 'Check your email for OTP.');
     }
 
     /**

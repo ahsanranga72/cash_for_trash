@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="banner-heading">
-                    <h1 class="banner-title" style="color: #ff9800">OTP verification</h1>
+                    <h1 class="banner-title" style="color: #ff9800">Forgot Password</h1>
                 </div>
             </div><!-- Col end -->
         </div><!-- Row end -->
@@ -18,10 +18,10 @@
             <div class="col-md-12">
                 <div class="card mt-2 mb-4">
                     <div class="card-body">
-                        <form action="{{ route('customer.auth.verify-otp') }}" method="post" id="product-select-form">
+                        <form action="{{ route('customer.auth.forgot-email-submit') }}" method="post" id="product-select-form">
                             @csrf
                             <div class="d-flex gap-2 justify-content-center">
-                                <input type="number" name="otp" id="otp" class="form-control" placeholder="Enter your otp">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">
                                 <button type="submit" class="btn btn-primary mx-4">Submit</button>
                             </div>
                         </form>

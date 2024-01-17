@@ -50,7 +50,7 @@ class AgentController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'phone' => 'required',
         ]);
 
@@ -82,8 +82,7 @@ class AgentController extends Controller
 
         $user = $this->user->find(auth()->id());
 
-        if(!Hash::check($request->old_pass, $user->password))
-        {
+        if (!Hash::check($request->old_pass, $user->password)) {
             return back()->withErrors('Old password not matched !');
         }
 

@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="card mt-2 mb-4">
                     <div class="card-body">
-                        <form action="{{ route('customer.auth.verify-otp') }}" method="post" id="product-select-form">
+                        <form action="{{ route('customer.auth.forgot-otp-verify') }}" method="post" id="product-select-form">
                             @csrf
                             <div class="d-flex gap-2 justify-content-center">
                                 <input type="number" name="otp" id="otp" class="form-control" placeholder="Enter your otp">

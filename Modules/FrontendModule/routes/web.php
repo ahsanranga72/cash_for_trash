@@ -36,6 +36,13 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
         Route::post('logout', 'LoginController@logout')->name('logout');
         Route::post('registration', 'RegistrationController@registration')->name('registration');
         Route::get('otp', 'OtpController@otp')->name('otp');
+        Route::post('verify-otp', 'OtpController@verify_otp')->name('verify-otp');
+        Route::get('forget-password', 'LoginController@forget_password')->name('forget-password');
+        Route::post('forgot-email-submit', 'LoginController@forgot_email_submit')->name('forgot-email-submit');
+        Route::get('forgot-otp', 'LoginController@forgot_otp')->name('forgot-otp');
+        Route::post('forgot-otp-verify', 'LoginController@forgot_otp_verify')->name('forgot-otp-verify');
+        Route::get('password-reset', 'LoginController@password_reset')->name('password-reset');
+        Route::post('password-reset', 'LoginController@password_reset_submit')->name('password-reset');
     });
     Route::group(['middleware' => 'customer'], function () {
         Route::resource('addresses', 'AddressController');

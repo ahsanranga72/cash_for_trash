@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello {{ $user['first_name'] }},</h1>
-    <p>This is your otp: {{ $rand }}</p>
+    <h1>Hi {{ $user['first_name'] }},</h1>
+    <p>Your order request status change to {{ $status }}</p>
 </body>
 </html>

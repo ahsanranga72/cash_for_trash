@@ -3,12 +3,24 @@
 namespace Modules\FrontendModule\app\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OtpMail;
+use App\Models\Otp;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
+    private $user;
+    private $otp;
+
+    public function __construct(User $user, Otp $otp)
+    {
+        $this->user = $user;
+        $this->otp = $otp;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -48,32 +60,85 @@ class LoginController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function forget_password()
     {
-        return view('frontendmodule::show');
+        return view('frontendmodule::customer.auth.forgot-password');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function forgot_email_submit(Request $request)
     {
-        return view('frontendmodule::edit');
+        $request->validate(['email' => 'required|email']);
+
+        $user = $this->user->where('email', $request['email'])->first();
+
+        if ($user) {
+            session()->forget('user_email');
+            session()->put('user_email', $request['email']);
+
+            $rand = rand(100000, 999999);
+
+            $otp = $this->otp;
+            $otp->email = $request['email'];
+            $otp->otp = $rand;
+            $otp->save();
+
+            Mail::to($request['email'])->send(new OtpMail($rand, $user));
+
+            return redirect()->route('customer.auth.forgot-otp')->with('success', 'Check your email for otp');
+        } else {
+            return back()->withErrors('User not found !');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
+    public function forgot_otp()
     {
-        //
+        return view('frontendmodule::customer.auth.forgot-otp');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function forgot_otp_verify(Request $request)
     {
-        //
+        $request->validate([
+            'otp' => 'required|integer|min:6'
+        ]);
+
+        $user_email = session('user_email');
+
+        $otp = $this->otp->where('email', $user_email)->first();
+
+        if ($request['otp'] === $otp->otp) {
+            $otp->delete();
+            return redirect()->route('customer.auth.password-reset')->with('success', 'Opt matched.');
+        } else {
+            return back()->withErrors('Otp does not match');
+        }
+    }
+
+    public function password_reset()
+    {
+        return view('frontendmodule::customer.auth.password-reset');
+    }
+
+    public function password_reset_submit(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:8',
+            'confirm_password' => 'same:password',
+        ]);
+
+        $user_email = session('user_email');
+
+        $user = $this->user->where('email', $user_email)->first();
+        $user['password'] = bcrypt($request['password']);
+        $user->save();
+
+        session()->forget('user_email');
+
+        return redirect()->route('home')->with('success', 'Password successfully reseted.');
     }
 }

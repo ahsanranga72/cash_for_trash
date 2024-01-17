@@ -86,6 +86,7 @@
                                                 placeholder="Password" name="password" required />
                                         </div>
                                     </div>
+                                    <a href="{{ route('customer.auth.forget-password') }}" style="color: blue">forgot password ?</a>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button type="submit" class="btn btn-primary btn-lg">Log in</button>
                                     </div>

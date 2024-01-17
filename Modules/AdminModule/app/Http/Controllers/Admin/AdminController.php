@@ -3,13 +3,15 @@
 namespace Modules\AdminModule\app\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\FrontendModule\app\Models\Order;
 
 class AdminController extends Controller
-{private $order;
+{
+    private $order;
 
     public function __construct(Order $order)
     {
@@ -20,8 +22,9 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $users = User::all();
         $orders = $this->order->with('customer', 'agent')->latest()->paginate(10);
-        return view('adminmodule::dashboard', compact('orders'));
+        return view('adminmodule::dashboard', compact('orders', 'users'));
     }
 
     /**

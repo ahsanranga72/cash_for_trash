@@ -3,9 +3,11 @@
 namespace Modules\AgentModule\app\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Mail\StatusMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Modules\AdminModule\app\Models\Product;
 use Modules\FrontendModule\app\Models\Order;
 
@@ -60,6 +62,8 @@ class OrderController extends Controller
         $order->agent_note = $request['agent_note'];
         $order->status = $request['order_status'];
         $order->save();
+
+        Mail::to($order->customer->email)->send(new StatusMail($order->status, $order->customer));
 
         return back()->with('success', DEFAULT_200_UPDATE['message']);
     }

@@ -15,7 +15,7 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Total orders</h6>
-                                    <h2 class="mb-0 number-font">69</h2>
+                                    <h2 class="mb-0 number-font">{{ $orders->count() }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,10 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Order pending</h6>
-                                    <h2 class="mb-0 number-font">10</h2>
+                                    @php
+                                        $pending = $orders->where('status', 'pending')->count();
+                                    @endphp
+                                    <h2 class="mb-0 number-font">{{ $pending }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +42,10 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Order processing</h6>
-                                    <h2 class="mb-0 number-font">5</h2>
+                                    @php
+                                        $processing = $orders->where('status', 'processing')->count();
+                                    @endphp
+                                    <h2 class="mb-0 number-font">{{ $processing }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +57,10 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Order completed</h6>
-                                    <h2 class="mb-0 number-font">52</h2>
+                                    @php
+                                        $completed = $orders->where('status', 'completed')->count();
+                                    @endphp
+                                    <h2 class="mb-0 number-font">{{ $completed }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +72,10 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Order cancelled</h6>
-                                    <h2 class="mb-0 number-font">2</h2>
+                                    @php
+                                        $cancelled = $orders->where('status', 'cancelled')->count();
+                                    @endphp
+                                    <h2 class="mb-0 number-font">{{ $cancelled }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +87,10 @@
                             <div class="d-flex">
                                 <div class="mt-2">
                                     <h6 class="">Order postponed</h6>
-                                    <h2 class="mb-0 number-font">0</h2>
+                                    @php
+                                        $postponed = $orders->where('status', 'postponed')->count();
+                                    @endphp
+                                    <h2 class="mb-0 number-font">{{ $postponed }}</h2>
                                 </div>
                             </div>
                         </div>
