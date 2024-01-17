@@ -3,10 +3,12 @@
 namespace Modules\FrontendModule\app\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OtpMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
 {
@@ -39,12 +41,17 @@ class RegistrationController extends Controller
             $user->profile_image = image_uploader('users/profile_images/', 'png', $request['profile_image'], !empty($user['profile_image']) ? $user['profile_image'] : null);
         }
         $user->is_active = 1;
-        $user->is_verified = 1;
+        $user->is_verified = 0;
         $user->save();
 
-        if (auth()->attempt(['email' => $user->email, 'password' => $request->password, 'is_active' => 1, 'user_type' => CUSTOMER], $request->remember)) {
-            return redirect()->route('home')->with('success', AUTH_REGISTER_200['message']);
-        }
+        $rand = rand(100000, 999999);
+        Mail::to($user->email)->send(new OtpMail($rand));
+        
+        return redirect()->route('customer.auth.otp');
+
+        // if (auth()->attempt(['email' => $user->email, 'password' => $request->password, 'is_active' => 1, 'user_type' => CUSTOMER], $request->remember)) {
+        //     return redirect()->route('home')->with('success', AUTH_REGISTER_200['message']);
+        // }
 
         return redirect()->back()->withInput($request->only('email', 'remember'))
             ->withErrors(['Something Wrong !']);

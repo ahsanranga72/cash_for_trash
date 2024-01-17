@@ -35,6 +35,7 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
         Route::post('login', 'LoginController@submit')->name('login');
         Route::post('logout', 'LoginController@logout')->name('logout');
         Route::post('registration', 'RegistrationController@registration')->name('registration');
+        Route::get('otp', 'OtpController@otp')->name('otp');
     });
     Route::group(['middleware' => 'customer'], function () {
         Route::resource('addresses', 'AddressController');
